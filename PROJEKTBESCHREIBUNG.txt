@@ -1,0 +1,33 @@
+PROJEKTBESCHREIBUNG: EVENTPLANNER APP
+=====================================
+
+1. THEMA UND ZIEL DER HOMEPAGE
+------------------------------
+Das Ziel dieses Projekts war die Entwicklung einer webbasierten Anwendung zur Verwaltung und Buchung von Veranstaltungen ("EventPlanner"). Die Plattform richtet sich an zwei Zielgruppen:
+- Veranstalter: Sie können Events mit detaillierten Informationen anlegen, darunter Titel, Datum, Beschreibung, Bild, maximale Teilnehmerzahl, Mindestalter und Preisstrukturen (inkl. Mengenrabatten).
+- Teilnehmer: Sie erhalten eine Übersicht über alle Events, können Details einsehen und Plätze reservieren.
+
+Ein zentraler Fokus lag auf der Benutzerfreundlichkeit (Usability) und der Datenintegrität. Das System soll verhindern, dass Events überbucht werden oder Teilnehmer das Mindestalter unterschreiten. Zudem sollte der Buchungsprozess dynamisch gestaltet sein, d.h. der Nutzer sieht sofort den Endpreis und erhält direktes Feedback (Erfolg/Fehler), ohne dass die Seite neu geladen werden muss.
+
+2. VERWENDETE TECHNOLOGIEN
+--------------------------
+Für die Umsetzung wurde ein moderner, aber leichtgewichtiger Tech-Stack gewählt:
+
+- Backend: Python 3 mit dem Flask-Framework. Flask wurde gewählt, weil es eine schnelle Entwicklung von Routen und Business-Logik ermöglicht und sich gut für kleine bis mittelgroße Projekte eignet.
+- Datenbank: SQLite. Als serverlose, dateibasierte Datenbank ist SQLite ideal für dieses Projekt, da es keine komplexe Installation erfordert und die Daten persistent speichert (Events, Reservierungen).
+- Frontend:
+    - HTML5 & Jinja2: Für die Strukturierung der Seiten und das dynamische Einfügen von Daten (z.B. Event-Listen) auf dem Server.
+    - CSS3: Für das Styling, inklusive responsivem Design für verschiedene Bildschirmgrößen.
+    - JavaScript (Vanilla): Für die clientseitige Interaktivität. Besonders wichtig für die Live-Preisberechnung im Browser und die asynchrone Kommunikation mit dem Server.
+- Kommunikation (AJAX): Die Datenübertragung beim Reservieren erfolgt asynchron über die Fetch API. Das Backend antwortet mit JSON-Daten statt HTML-Seiten, was eine flüssigere User Experience ermöglicht (kein "Flackern" durch Neuladen).
+
+3. REFLEXION ÜBER DEN ENTWICKLUNGSPROZESS
+-----------------------------------------
+Der Entwicklungsprozess verlief iterativ und baute aufeinander auf:
+
+Zu Beginn stand das Aufsetzen des Flask-Servers und die Definition der Datenbankmodelle (`events` und `reservations`). Dies bildete das solide Fundament.
+In der zweiten Phase wurde das Frontend entwickelt. Hier lag die Herausforderung darin, die Business-Logik (z.B. "Ist das Event voll?") nicht nur im Backend zu prüfen, sondern dem Nutzer auch visuell Feedback zu geben.
+Ein wichtiger Lernschritt war die Umstellung von klassischen Formular-Submits auf AJAX. Anfangs führten Fehler (z.B. "Zu jung") zu einem Neuladen der Seite, was für den Nutzer frustrierend war, da er die Daten neu eingeben musste. Durch die Implementierung von JavaScript-Fetch und JSON-Antworten konnte dieses Problem gelöst werden: Fehlermeldungen erscheinen nun als Popup, und die Eingaben bleiben erhalten.
+Abschließend wurde die Anwendung durch statische Seiten (Impressum, Kontakt) und eine konsistente Navigation abgerundet.
+
+Das Ergebnis ist eine robuste Web-Applikation, die alle funktionalen Anforderungen erfüllt und durch moderne Web-Techniken eine gute Benutzererfahrung bietet.
