@@ -1,0 +1,58 @@
+PROGRAMMABLAUFPLAN (PAP) - GESAMTE APP (USER JOURNEY)
+=====================================================
+
+START
+  |
+  V
+[Landing Page aufrufen]
+  |
+  +-------------------------------------------------------+
+  |                       |                               |
+  V                       V                               V
+[Navigation: Events]    [Navigation: Event erstellen]   [Navigation: Info/Kontakt]
+  |                       |                               |
+  |                       V                               V
+  |                 [Formular ausfüllen]            [Seite anzeigen]
+  |                 (Titel, Datum, Bilder,          (Über uns / Kontakt / Impressum)
+  |                  Preise, Rabatte)                     |
+  |                       |                               |
+  |                       V                               |
+  |                 [Speichern (POST)]                    |
+  |                       |                               |
+  |                       V                               |
+  |                 [Datenbank Insert]                    |
+  |                       |                               |
+  V                       V                               |
+[Liste aller Events anzeigen] <---------------------------+
+  |
+  V
+[Einzelnes Event auswählen]
+  |
+  V
+[Detail-Seite anzeigen]
+  |
+  V
+[Reservierungs-Formular]
+  |
+  +---> [Eingabe: Name, Geburtsdatum, Anzahl]
+  |           |
+  |           V
+  |     (JS berechnet Preis live)
+  |           |
+  |           V
+  |     [Button "Reservieren" klicken]
+  |           |
+  |           V
+  |     [AJAX Request an Backend]
+  |           |
+  |           V
+  |     < Entscheidung: Server Antwort? >
+  |           |                 |
+  |      [Fehler]           [Erfolg]
+  |           |                 |
+  |           V                 V
+  +---- [Popup: Fehler]     [Seite neu laden]
+                            (Name erscheint in Liste)
+                                |
+                                V
+                               ENDE

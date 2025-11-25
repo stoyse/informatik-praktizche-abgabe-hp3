@@ -1,0 +1,49 @@
+PROGRAMMABLAUFPLAN (PAP) - JAVASCRIPT FRONTEND (PREIS & SUBMIT)
+===============================================================
+Datei: reservation.js
+
+START (Seite geladen)
+  |
+  V
+[Initialisierung]
+(Lese Basispreis & Rabatt-Regeln aus HTML-Daten)
+  |
+  V
+[Event Listener registrieren]
+(Input-Feld 'Anzahl' -> 'input' Event)
+(Formular -> 'submit' Event)
+  |
+  V
+  |---< WARTEN AUF USER AKTION >---|
+  |                                |
+  V (User ändert Anzahl)           V (User klickt Reservieren)
+  |                                |
+[Funktion: calculatePrice]       [Event: Form Submit]
+  |                                |
+  V                                V
+[Lese Anzahl aus Input]          [Verhindere Standard-Submit]
+  |                              (e.preventDefault)
+  V                                |
+[Sortiere Rabatte absteigend]      V
+  |                              [Erstelle FormData Objekt]
+  V                                |
+[Schleife durch Rabatte]           V
+(Finde höchsten passenden %)     [Sende AJAX POST (fetch)]
+  |                                |
+  V                                V
+[Berechnung]                     < Warten auf Server Antwort >
+(Basis * Anzahl = Zwischensumme)   |
+(Zwischensumme * % = Rabatt)       V
+(Zwischensumme - Rabatt = Endpreis)|
+  |                                |
+  V                                V
+[Update HTML Elemente]           < Entscheidung: JSON Response? >
+(Zeige Preise an)                  |              |
+  |                                |              |
+  V                                V Error        V Success
+Zurück zu WARTEN                 [Alert Popup]  [Seite neu laden]
+                                 (Zeige Text)   (window.location.reload)
+                                   |              |
+                                   V              V
+                                 Zurück zu      ENDE
+                                 WARTEN

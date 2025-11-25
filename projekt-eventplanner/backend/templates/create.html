@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EventPlanner - Neues Event</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <header>
+        <a href="{{ url_for('landing') }}" class="logo">
+            <span>✨</span> EventPlanner
+        </a>
+        <nav>
+            <a href="{{ url_for('events') }}" class="btn btn-outline">Zurück zu den Events</a>
+            <a href="{{ url_for('about') }}" class="btn btn-outline">Über uns</a>
+            <a href="{{ url_for('contact') }}" class="btn btn-outline">Kontakt</a>
+        </nav>
+    </header>
+    <main>
+        <div class="form-container">
+            <h2 style="margin-bottom: 1.5rem;">Neues Event erstellen</h2>
+            <form method="POST" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="title">Event Name</label>
+                    <input type="text" id="title" name="title" required placeholder="z.B. Sommerfest 2025">
+                </div>
+                <div class="form-group">
+                    <label for="date">Datum</label>
+                    <input type="date" id="date" name="date" required>
+                </div>
+                <div class="form-group">
+                    <label for="time">Uhrzeit</label>
+                    <input type="time" id="time" name="time" required>
+                </div>
+                <div class="form-group">
+                    <label for="address">Adresse</label>
+                    <input type="text" id="address" name="address" placeholder="Straße, Hausnummer, PLZ, Stadt" required>
+                </div>
+                <div class="form-group">
+                    <label for="dresscode">Dresscode</label>
+                    <select id="dresscode" name="dresscode">
+                        <option value="Casual">Casual</option>
+                        <option value="Smart Casual">Smart Casual</option>
+                        <option value="Business">Business</option>
+                        <option value="Abendgarderobe">Abendgarderobe</option>
+                        <option value="Themenbezogen">Themenbezogen</option>
+                        <option value="Kein Dresscode">Kein Dresscode</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="price">Eintrittspreis (€) (Zahlung vor Ort)</label>
+                    <input type="number" id="price" name="price" min="0" step="0.01" placeholder="0.00">
+                </div>
+
+                <!-- Dynamic Discount Section controlled by JS -->
+                <div class="form-group" id="discount-section">
+                    <label>Mengenrabatte</label>
+                    <div id="discount-list">
+                        <!-- JS will add items here -->
+                    </div>
+                    <button type="button" id="add-discount-btn" class="btn btn-outline" style="margin-top: 0.5rem; font-size: 0.9rem;">+ Rabatt hinzufügen</button>
+                    <input type="hidden" id="discount_info" name="discount_info">
+                </div>
+
+                <div class="form-group">
+                    <label for="maxParticipants">Maximale Teilnehmerzahl</label>
+                    <input type="number" id="maxParticipants" name="maxParticipants" min="1" value="10" required>
+                </div>
+                <div class="form-group">
+                    <label for="min_age">Mindestalter (Jahre)</label>
+                    <input type="number" id="min_age" name="min_age" min="0" value="0" placeholder="0 für keine Beschränkung">
+                </div>
+                <div class="form-group">
+                    <label for="description">Beschreibung</label>
+                    <textarea id="description" name="description" rows="4" placeholder="Was passiert bei diesem Event?"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="cover">Cover-Foto (quadratisch empfohlen)</label>
+                    <input type="file" id="cover" name="cover" accept="image/*">
+                </div>
+                <div class="form-group">
+                    <label for="banner">Banner-Foto (breit empfohlen)</label>
+                    <input type="file" id="banner" name="banner" accept="image/*">
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%;">Event Speichern</button>
+            </form>
+        </div>
+    </main>
+    <footer>
+        <div class="footer-content">
+            <a href="{{ url_for('impressum') }}">Impressum</a>
+            <a href="{{ url_for('contact') }}">Kontakt</a>
+        </div>
+    </footer>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>

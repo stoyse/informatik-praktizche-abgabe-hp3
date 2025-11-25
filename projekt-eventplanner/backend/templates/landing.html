@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EventPlanner - Landingpage</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <header>
+        <a href="{{ url_for('landing') }}" class="logo"><span>✨</span> EventPlanner</a>
+        <nav>
+            <a href="{{ url_for('events') }}" class="btn btn-primary">Events</a>
+            <a href="{{ url_for('create_event_page') }}" class="btn btn-outline">Event erstellen</a>
+            <a href="{{ url_for('about') }}" class="btn btn-outline">Über uns</a>
+            <a href="{{ url_for('contact') }}" class="btn btn-outline">Kontakt</a>
+        </nav>
+    </header>
+    <main>
+        <section class="form-container" style="max-width:700px;">
+            <h1>Willkommen bei EventPlanner!</h1>
+            <p>Mit EventPlanner kannst du ganz einfach Events erstellen, verwalten und Teilnehmer begeistern. Lade ein Cover- und Bannerbild hoch, beschreibe dein Event und teile es mit anderen.</p>
+            <ul style="margin:2rem 0;">
+                <li>📅 <b>Events Übersicht:</b> Alle geplanten Events auf einen Blick</li>
+                <li>📝 <b>Event erstellen:</b> Mit Bildern, Beschreibung und Teilnehmerlimit</li>
+                <li>🔍 <b>Event-Details:</b> Alle Infos und Bilder zu jedem Event</li>
+            </ul>
+            <a href="{{ url_for('events') }}" class="btn btn-primary">Zu den Events</a>
+        </section>
+    </main>
+    <footer>
+        <div class="footer-content">
+            <a href="{{ url_for('impressum') }}">Impressum</a>
+            <a href="{{ url_for('contact') }}">Kontakt</a>
+        </div>
+    </footer>
+</body>
+</html>

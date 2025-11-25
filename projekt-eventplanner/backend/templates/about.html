@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EventPlanner - Über uns</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <header>
+        <a href="{{ url_for('landing') }}" class="logo"><span>✨</span> EventPlanner</a>
+        <nav>
+            <a href="{{ url_for('events') }}" class="btn btn-outline">Events</a>
+            <a href="{{ url_for('create_event_page') }}" class="btn btn-outline">Event erstellen</a>
+            <a href="{{ url_for('about') }}" class="btn btn-primary">Über uns</a>
+            <a href="{{ url_for('contact') }}" class="btn btn-outline">Kontakt</a>
+        </nav>
+    </header>
+    <main>
+        <div class="form-container" style="max-width:800px; text-align: center;">
+            <h1>Über uns</h1>
+            <div style="margin: 2rem 0;">
+                <img src="{{ url_for('static', filename='pictures/team.JPG') }}" alt="Unser Team" style="max-width: 100%; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+            </div>
+            <div style="font-size: 1.1rem; line-height: 1.8;">
+                <p>Willkommen bei EventPlanner! Wir sind ein leidenschaftliches Team, das es sich zur Aufgabe gemacht hat, die Eventplanung so einfach und angenehm wie möglich zu gestalten.</p>
+                <p style="margin-top: 1rem;">Unser Team besteht aus:</p>
+                <ul style="list-style: none; padding: 0; margin-top: 1rem; font-weight: bold; font-size: 1.2rem;">
+                    <li>Yannik</li>
+                    <li>Julian</li>
+                    <li>Gennaro</li>
+                </ul>
+            </div>
+        </div>
+    </main>
+    <footer>
+        <div class="footer-content">
+            <a href="{{ url_for('impressum') }}">Impressum</a>
+            <a href="{{ url_for('contact') }}">Kontakt</a>
+        </div>
+    </footer>
+</body>
+</html>

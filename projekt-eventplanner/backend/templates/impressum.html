@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EventPlanner - Impressum</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <header>
+        <a href="{{ url_for('landing') }}" class="logo"><span>✨</span> EventPlanner</a>
+        <nav>
+            <a href="{{ url_for('events') }}" class="btn btn-outline">Events</a>
+            <a href="{{ url_for('create_event_page') }}" class="btn btn-outline">Event erstellen</a>
+            <a href="{{ url_for('about') }}" class="btn btn-outline">Über uns</a>
+            <a href="{{ url_for('contact') }}" class="btn btn-outline">Kontakt</a>
+        </nav>
+    </header>
+    <main>
+        <div class="form-container" style="max-width:800px;">
+            <h1>Impressum</h1>
+            <br>
+            <h2>Angaben gemäß § 5 TMG</h2>
+            <p>Julian Stosse<br>
+            Musterstraße 1<br>
+            12345 Musterstadt</p>
+            <br>
+            <h2>Kontakt</h2>
+            <p>E-Mail: julian.stosse@wwgsk.de</p>
+            <br>
+            <h2>Haftungsausschluss</h2>
+            <p>Die Inhalte unserer Seiten wurden mit größter Sorgfalt erstellt. Für die Richtigkeit, Vollständigkeit und Aktualität der Inhalte können wir jedoch keine Gewähr übernehmen.</p>
+        </div>
+    </main>
+    <footer>
+        <div class="footer-content">
+            <a href="{{ url_for('impressum') }}">Impressum</a>
+            <a href="{{ url_for('contact') }}">Kontakt</a>
+        </div>
+    </footer>
+</body>
+</html>

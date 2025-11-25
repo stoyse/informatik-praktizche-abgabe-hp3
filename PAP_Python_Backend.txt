@@ -1,0 +1,56 @@
+PROGRAMMABLAUFPLAN (PAP) - PYTHON BACKEND (RESERVIERUNGSLOGIK)
+==============================================================
+Funktion: reserve_event(event_id)
+
+START (POST Request empfangen)
+  |
+  V
+[Daten aus Request lesen]
+(Name, Geburtsdatum, Anzahl)
+  |
+  V
+< Entscheidung: Ist Name vorhanden? >
+  |-- NEIN --> [Return JSON Error: "Name fehlt"] --> ENDE
+  |
+  V JA
+[Lade Event-Daten aus DB]
+(Max Teilnehmer, Aktuelle Teilnehmer, Mindestalter)
+  |
+  V
+< Entscheidung: Existiert Event? >
+  |-- NEIN --> [Return JSON Error: 404] --> ENDE
+  |
+  V JA
+< Entscheidung: Hat Event Mindestalter (> 0)? >
+  |
+  |-- JA --> < Entscheidung: Geburtsdatum vorhanden? >
+  |            |-- NEIN --> [Return JSON Error: "Datum fehlt"] --> ENDE
+  |            |
+  |            V JA
+  |          [Berechne Alter (Heute - Geburtsdatum)]
+  |            |
+  |            V
+  |          < Entscheidung: Alter < Mindestalter? >
+  |            |-- JA --> [Return JSON Error: "Zu jung"] --> ENDE
+  |            |
+  |            V NEIN (Alt genug)
+  |            |
+  +<-----------+
+  |
+  V
+< Entscheidung: (Aktuelle + Neue Teilnehmer) > Max Kapazität? >
+  |-- JA --> [Return JSON Error: "Nicht genügend Plätze"] --> ENDE
+  |
+  V NEIN (Platz verfügbar)
+[Update DB: Events Tabelle]
+(Setze current_participants = Neuer Wert)
+  |
+  V
+[Insert DB: Reservations Tabelle]
+(Speichere Name, EventID, Anzahl)
+  |
+  V
+[Return JSON Success: True]
+  |
+  V
+ENDE

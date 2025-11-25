@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EventPlanner - Event Details</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <header>
+        <a href="{{ url_for('landing') }}" class="logo"><span>✨</span> EventPlanner</a>
+        <nav>
+            <a href="{{ url_for('events') }}" class="btn btn-outline">Zurück zu den Events</a>
+            <a href="{{ url_for('about') }}" class="btn btn-outline">Über uns</a>
+            <a href="{{ url_for('contact') }}" class="btn btn-outline">Kontakt</a>
+        </nav>
+    </header>
+    <main>
+        <div class="form-container" style="max-width:700px;">
+            <h1>{{ event.title }}</h1>
+            {% if event.banner_url %}
+                <img src="{{ event.banner_url }}" alt="Banner" style="width:100%;height:120px;object-fit:cover;border-radius:8px;margin-bottom:1rem;">
+            {% endif %}
+            <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1rem;">
+                {% if event.cover_url %}
+                    <img src="{{ event.cover_url }}" alt="Cover" style="width:80px;height:80px;object-fit:cover;border-radius:50%;box-shadow:0 2px 8px #ccc;">
+                {% endif %}
+                <div>
+                    <div class="event-date">{{ event.date }} {% if event.time %} um {{ event.time }} Uhr{% endif %}</div>
+                    <div class="capacity-info">Max. Teilnehmer: {{ event.max_participants }}</div>
+                    {% if event.address %}
+                    <div class="address-info">📍 {{ event.address }}</div>
+                    {% endif %}
+                </div>
+            </div>
+            
+            <div style="background: #f9f9f9; padding: 1rem; border-radius: 8px; margin-bottom: 1rem;">
+                {% if event.price %}
+                <p><strong>Eintritt:</strong> {{ event.price }} € (Zahlung vor Ort)</p>
+                {% endif %}
+                
+                {% if event.dresscode %}
+                <p><strong>Dresscode:</strong> {{ event.dresscode }}</p>
+                {% endif %}
+
+                {% if event.min_age > 0 %}
+                <p><strong>Mindestalter:</strong> {{ event.min_age }} Jahre</p>
+                {% endif %}
+
+                {% if event.discount_info %}
+                <div style="margin-top: 0.5rem;">
+                    <strong>Mengenrabatte:</strong>
+                    <ul style="margin-top: 0.25rem; padding-left: 1.2rem;">
+                        {% for discount in event.discount_info %}
+                            <li>Ab {{ discount.people }} Personen: {{ discount.percent }}% Rabatt</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                {% endif %}
+            </div>
+
+            <p class="event-desc">{{ event.description }}</p>
+
+            <!-- Reservation Section -->
+            <div class="reservation-section" style="border-top: 2px solid #eee; padding-top: 1.5rem; margin-top: 2rem;">
+                <h3>Plätze reservieren</h3>
+                <div class="capacity-bar" style="background: #eee; height: 10px; border-radius: 5px; margin: 10px 0; overflow: hidden;">
+                    <div style="background: var(--primary); height: 100%; width: {{ (event.current_participants / event.max_participants * 100)|round }}%;"></div>
+                </div>
+                <p style="font-size: 0.9rem; color: #666; margin-bottom: 1rem;">
+                    Belegt: {{ event.current_participants }} / {{ event.max_participants }}
+                </p>
+
+                {% if event.current_participants < event.max_participants %}
+                <form action="{{ url_for('reserve_event', event_id=event.id) }}" method="POST" id="reservation-form">
+                    <div class="form-group">
+                        <label for="name">Dein Name</label>
+                        <input type="text" id="name" name="name" required placeholder="Max Mustermann">
+                    </div>
+                    {% if event.min_age > 0 %}
+                    <div class="form-group">
+                        <label for="birthdate">Dein Geburtsdatum (Altersprüfung: {{ event.min_age }}+)</label>
+                        <input type="date" id="birthdate" name="birthdate" required>
+                    </div>
+                    {% endif %}
+                    <div class="form-group">
+                        <label for="participants">Anzahl Personen</label>
+                        <input type="number" id="participants" name="participants" min="1" max="{{ event.max_participants - event.current_participants }}" value="1" required>
+                    </div>
+                    
+                    <div id="price-calculation" style="background: #eef2f7; padding: 1rem; border-radius: 8px; margin-bottom: 1rem;">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                            <span>Einzelpreis:</span>
+                            <span id="base-price-display">{{ event.price }} €</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                            <span>Zwischensumme:</span>
+                            <span id="subtotal-display">0.00 €</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem; color: var(--secondary);">
+                            <span>Rabatt:</span>
+                            <span id="discount-display">0%</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; font-weight: bold; font-size: 1.2rem; border-top: 1px solid #ccc; padding-top: 0.5rem;">
+                            <span>Gesamtpreis:</span>
+                            <span id="total-price-display">0.00 €</span>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">Jetzt Reservieren</button>
+                </form>
+                {% else %}
+                <div style="background: #ffecec; color: #d63031; padding: 1rem; border-radius: 8px; text-align: center; font-weight: bold;">
+                    Leider ausgebucht!
+                </div>
+                {% endif %}
+            </div>
+
+            <!-- Participants List -->
+            {% if event.reservations %}
+            <div class="participants-section" style="margin-top: 2rem; border-top: 2px solid #eee; padding-top: 1.5rem;">
+                <h3>Bereits angemeldet</h3>
+                <ul style="list-style: none; padding: 0; margin-top: 1rem;">
+                    {% for res in event.reservations %}
+                    <li style="background: #fff; border: 1px solid #eee; padding: 10px; margin-bottom: 8px; border-radius: 6px; display: flex; justify-content: space-between; align-items: center;">
+                        <span style="font-weight: 600;">{{ res.name }}</span>
+                        <span style="background: #eee; padding: 2px 8px; border-radius: 12px; font-size: 0.85rem;">{{ res.count }} Person{% if res.count > 1 %}en{% endif %}</span>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+        </div>
+    </main>
+    <footer>
+        <div class="footer-content">
+            <a href="{{ url_for('impressum') }}">Impressum</a>
+            <a href="{{ url_for('contact') }}">Kontakt</a>
+        </div>
+    </footer>
+    
+    <!-- Pass data to JS -->
+    <script>
+        const basePrice = {{ event.price if event.price else 0 }};
+        const discountInfo = {{ event.discount_info|tojson }};
+    </script>
+    <script src="{{ url_for('static', filename='js/reservation.js') }}?v={{ range(1, 10000) | random }}"></script>
+</body>
+</html>
